@@ -1,5 +1,7 @@
 document.getElementById("hidden-textbox").focus();
 
+word = 'ADOPT'
+
 var guessCount = 0;
 var tileCount = 0;
 
@@ -17,12 +19,29 @@ function deleteValue(){
     }
 }
 
+function processWord(){
+    for (let i = 0; i < 5; i++) {
+        element = document.getElementById(`${guessCount}-${i}`);
+        if (element.innerText == word[i]){
+            element.classList.add('correct')
+        }
+        else if (element.innerText == word[0] || element.innerText == word[1] || element.innerText == word[2] || element.innerText == word[3] || element.innerText == word[4]) {
+            element.classList.add('possible')
+        }
+        else {
+            element.classList.add('wrong')
+        }
+    }
+}
+
 function guessWord(){
-    if (guessCount < 5){
+    if (guessCount < 5 && tileCount == 5){
+        processWord();
         guessCount += 1
         tileCount = 0
+        console.log('LOLOLOL')
     } else {
-        console.log('LMAOOOOO')
+        console.log('You have not entered a 5 letter word!')
     }
 }
 
@@ -39,6 +58,7 @@ function keyPressed(e){
         deleteValue();
     } else if (keynum >= 65 && keynum <= 90){
         putValue(String.fromCharCode(keynum));
+        console.log(tileCount)
     } else if (keynum == 13) {
         guessWord();
     }
